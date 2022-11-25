@@ -12,6 +12,7 @@ public class FoxController : MonoBehaviour
     private Animator animator;
     private bool isWalking = false;
     private bool isFacingRight = true;
+    public int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -82,5 +83,15 @@ public class FoxController : MonoBehaviour
     private bool isGrounded()
     {
         return Physics2D.Raycast(this.transform.position, Vector2.down, rayLength, groundLayer.value);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Bonus"))
+        {
+            score++;
+            Debug.Log("Score: " + score);
+            other.gameObject.SetActive(false);
+        }
     }
 }
