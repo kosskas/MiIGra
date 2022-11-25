@@ -14,7 +14,7 @@ public class FoxController : MonoBehaviour
     {
         
     }
-
+    //test1
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
