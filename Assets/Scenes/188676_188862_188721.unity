@@ -521,6 +521,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   score: 0
+  scoreIncrement: 1
 --- !u!95 &566599257
 Animator:
   serializedVersion: 4

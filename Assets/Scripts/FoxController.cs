@@ -13,6 +13,7 @@ public class FoxController : MonoBehaviour
     private bool isWalking = false;
     private bool isFacingRight = true;
     public int score = 0;
+    public int scoreIncrement = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -95,7 +96,7 @@ public class FoxController : MonoBehaviour
     {
         if (other.CompareTag("Bonus"))
         {
-            score++;
+            score += scoreIncrement;
             Debug.Log("Score: " + score);
             other.gameObject.SetActive(false);
         }
