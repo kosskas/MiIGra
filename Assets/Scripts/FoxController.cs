@@ -49,18 +49,24 @@ public class FoxController : MonoBehaviour
                 Flip();
         }
         //Lewo
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             transform.Translate(-moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
             isWalking = true;
             if (isFacingRight)
                 Flip();
         }
+        else
+        {
+            isWalking = false;
+        }
+
         //Góra
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
+        
     }
 
     private void Jump()
