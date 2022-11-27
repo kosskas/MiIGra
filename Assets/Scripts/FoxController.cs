@@ -14,6 +14,7 @@ public class FoxController : MonoBehaviour
     private bool isFacingRight = true;
     public int score = 0;
     public int scoreIncrement = 1;
+    [SerializeField] UIManager gameOverManager; 
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +100,11 @@ public class FoxController : MonoBehaviour
             score += scoreIncrement;
             Debug.Log("Score: " + score);
             other.gameObject.SetActive(false);
+        }
+
+        if (other.CompareTag("GameOver"))
+        {
+            gameOverManager.SetGameOver();
         }
     }
 }
