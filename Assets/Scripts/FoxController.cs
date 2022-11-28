@@ -14,7 +14,9 @@ public class FoxController : MonoBehaviour
     private bool isFacingRight = true;
     public int score = 0;
     public int scoreIncrement = 1;
-    [SerializeField] UIManager gameOverManager; 
+    [SerializeField] UIManager gameOverManager;
+    private int lives = 3;
+    private Vector2 startPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class FoxController : MonoBehaviour
     }
     void Awake()
     {
+        startPosition = transform.position;
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -100,11 +103,46 @@ public class FoxController : MonoBehaviour
             score += scoreIncrement;
             Debug.Log("Score: " + score);
             other.gameObject.SetActive(false);
+            return;
         }
 
         if (other.CompareTag("GameOver"))
         {
             gameOverManager.SetGameOver();
+            return;
         }
+
+        if(other.CompareTag("Enemy") && transform.position.y > other.gameObject.transform.position.y)
+        {
+            score += scoreIncrement;
+            Debug.Log("Killed an enemy");
+        }
+        else
+        {
+            transform.position = startPosition;
+            lives--;
+            if(lives == 0)
+            {
+                Debug.Log("gameover");
+            }
+            else
+            {
+                Debug.Log("Num of lives: "+lives);
+                transform.position = startPosition;
+            }
+        }
+
+        if(other.CompareTag("FallLevel"))
+        {
+            Death();
+        }
+    }
+
+    private void Death()
+    {
+        transform.position = startPosition;
+        lives--;
+        Debug.Log("gameover");
+        
     }
 }
