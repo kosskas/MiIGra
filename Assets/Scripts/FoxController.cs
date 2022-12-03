@@ -17,6 +17,8 @@ public class FoxController : MonoBehaviour
     [SerializeField] UIManager gameOverManager;
     private int lives = 3;
     private Vector2 startPosition;
+    private int keysFound = 0;
+    private const int keysNumber = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -98,11 +100,33 @@ public class FoxController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Heart"))
+        {
+            lives++;
+            Debug.Log("Lives: " + lives);
+            other.gameObject.SetActive(false);
+            return;
+        }
         if (other.CompareTag("Bonus"))
         {
             score += scoreIncrement;
             Debug.Log("Score: " + score);
             other.gameObject.SetActive(false);
+            return;
+        }
+
+
+
+        if (other.CompareTag("Key"))
+        {
+            keysFound++;
+            Debug.Log("Keys: " + keysFound);
+
+            other.gameObject.SetActive(false);
+            if(keysFound == keysNumber)
+            {
+                Debug.Log("Found all keys!");
+            }
             return;
         }
 
