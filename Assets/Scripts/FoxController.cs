@@ -118,7 +118,7 @@ public class FoxController : MonoBehaviour
         }
 
 
-
+        //test
         if (other.CompareTag("Key"))
         {
             //keysFound++;
