@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState = GameState.GS_PAUSEMENU;
     public Canvas inGameCanvas;
     public Image[] keysTab;
-    private int keysFound = 0;
+    public int keysFound = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(instance.currentGameState == GameState.GS_GAME)
             {

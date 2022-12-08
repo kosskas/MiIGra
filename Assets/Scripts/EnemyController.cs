@@ -93,7 +93,7 @@ public class EnemyController : MonoBehaviour
     }
     private IEnumerator KillOnAnimationEnd()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
     }
 }

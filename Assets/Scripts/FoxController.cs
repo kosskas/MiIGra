@@ -136,7 +136,11 @@ public class FoxController : MonoBehaviour
 
         if (other.CompareTag("GameOver"))
         {
-            gameOverManager.SetGameOver();
+            if( GameManager.instance.keysFound == 3)
+            {
+                gameOverManager.SetGameOver();
+            }
+            
             return;
         }
 
