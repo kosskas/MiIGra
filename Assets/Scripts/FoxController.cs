@@ -12,7 +12,6 @@ public class FoxController : MonoBehaviour
     private Animator animator;
     private bool isWalking = false;
     private bool isFacingRight = true;
-    public int score = 0;
     public int scoreIncrement = 1;
     [SerializeField] UIManager gameOverManager;
     private int lives = 3;
@@ -27,6 +26,7 @@ public class FoxController : MonoBehaviour
     }
     void Awake()
     {
+
         startPosition = transform.position;
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -35,12 +35,15 @@ public class FoxController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // transform.Translate(moveSpeed, 0.0f, 0.0f, Space.World);
-        HandleMovement();
-        animator.SetBool("IsGrounded", isGrounded());
-        animator.SetBool("IsWalking", isWalking);
+        if (GameManager.instance.currentGameState == GameState.GS_GAME)
+        {
+            // transform.Translate(moveSpeed, 0.0f, 0.0f, Space.World);
+            HandleMovement();
+            animator.SetBool("IsGrounded", isGrounded());
+            animator.SetBool("IsWalking", isWalking);
 
-        // Debug.DrawRay(transform.position, rayLength * Vector3.down, Color.white, 1,false);
+            // Debug.DrawRay(transform.position, rayLength * Vector3.down, Color.white, 1,false);
+        }
     }
 
 
@@ -109,8 +112,7 @@ public class FoxController : MonoBehaviour
         }
         if (other.CompareTag("Bonus"))
         {
-            score += scoreIncrement;
-            Debug.Log("Score: " + score);
+            GameManager.instance.AddPoints(scoreIncrement);
             other.gameObject.SetActive(false);
             return;
         }
@@ -119,14 +121,16 @@ public class FoxController : MonoBehaviour
 
         if (other.CompareTag("Key"))
         {
-            keysFound++;
-            Debug.Log("Keys: " + keysFound);
-
+            //keysFound++;
+            //Debug.Log("Keys: " + keysFound);
+            GameManager.instance.AddKeys();
             other.gameObject.SetActive(false);
+            /*
             if(keysFound == keysNumber)
             {
                 Debug.Log("Found all keys!");
             }
+            */
             return;
         }
 
@@ -138,7 +142,7 @@ public class FoxController : MonoBehaviour
 
         if(other.CompareTag("Enemy") && transform.position.y > other.gameObject.transform.position.y)
         {
-            score += scoreIncrement;
+            //score += scoreIncrement;
             Debug.Log("Killed an enemy");
         }
         else
