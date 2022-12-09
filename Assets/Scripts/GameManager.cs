@@ -10,11 +10,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public TMP_Text scoreText;
+    public TMP_Text heartsText;
+    public TMP_Text enemyKills;
     private int score = 0;
+    private int lives = 3;
+    private int enemiesKilled = 0;
     public GameState currentGameState = GameState.GS_PAUSEMENU;
     public Canvas inGameCanvas;
     public Image[] keysTab;
     public int keysFound = 0;
+    public int keysToFound = 3;
     public TMP_Text timeText;
     private float timer = 0;
 
@@ -22,14 +27,17 @@ public class GameManager : MonoBehaviour
     //
     void Start()
     {
-        
+        heartsText.text = lives.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateTime();
-
+        if (lives == 0)
+        {
+            GameOver();
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(instance.currentGameState == GameState.GS_GAME)
@@ -66,6 +74,16 @@ public class GameManager : MonoBehaviour
     {
         score += points;
         scoreText.text = score.ToString();
+    }
+    public void AddHeart(int points)
+    {
+        lives += points;
+        heartsText.text = lives.ToString();
+    }
+    public void AddKill()
+    {
+        enemiesKilled++;
+        enemyKills.text = enemiesKilled.ToString();
     }
 
     void SetGameState(GameState newGameState)

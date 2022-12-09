@@ -14,10 +14,10 @@ public class FoxController : MonoBehaviour
     private bool isFacingRight = true;
     public int scoreIncrement = 1;
     [SerializeField] UIManager gameOverManager;
-    private int lives = 3;
+   // private int lives = 3;
     private Vector2 startPosition;
-    private int keysFound = 0;
-    private const int keysNumber = 3;
+    //private int keysFound = 0;
+   // private const int keysNumber = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -116,13 +116,16 @@ public class FoxController : MonoBehaviour
         {
             if (transform.position.y > other.gameObject.transform.position.y)
             {
+                GameManager.instance.AddKill();
                 //score += scoreIncrement;
                 Debug.Log("Killed an enemy");
             }
             else
             {
                 transform.position = startPosition;
-                lives--;
+                GameManager.instance.AddHeart(-1);
+                //lives--;
+                /*
                 if (lives == 0)
                 {
                     Debug.Log("gameover");
@@ -132,6 +135,7 @@ public class FoxController : MonoBehaviour
                     Debug.Log("Num of lives: " + lives);
                     transform.position = startPosition;
                 }
+                */
             }
         }
 
@@ -144,7 +148,7 @@ public class FoxController : MonoBehaviour
         // GameOver //
         if (other.CompareTag("GameOver"))
         {
-            if (GameManager.instance.keysFound == 3)
+            if (GameManager.instance.keysFound == GameManager.instance.keysToFound)
             {
                 gameOverManager.SetGameOver();
             }
@@ -155,8 +159,9 @@ public class FoxController : MonoBehaviour
         // Heart //
         if (other.CompareTag("Heart"))
         {
-            lives++;
-            Debug.Log("Lives: " + lives);
+            GameManager.instance.AddHeart(1);
+            //lives++;
+            //Debug.Log("Lives: " + lives);
             other.gameObject.SetActive(false);
             return;
         }
@@ -195,7 +200,8 @@ public class FoxController : MonoBehaviour
     private void Death()
     {
         transform.position = startPosition;
-        lives--;
+        //lives--;
+        GameManager.instance.AddHeart(-1);
         Debug.Log("gameover");
         
     }
