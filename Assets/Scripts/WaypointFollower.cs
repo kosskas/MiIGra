@@ -17,7 +17,7 @@ public class WaypointFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2.MoveTowards(this.transform.position, waypoints[currentWaypoint].transform.position, speed * Time.deltaTime);
+        this.transform.position =Vector2.MoveTowards(this.transform.position, waypoints[currentWaypoint].transform.position, speed * Time.deltaTime);
         if (Vector2.Distance(waypoints[currentWaypoint].transform.position,this.transform.position) < 0.1f)
         {
             currentWaypoint = (currentWaypoint +1)%waypoints.Length;
@@ -25,6 +25,6 @@ public class WaypointFollower : MonoBehaviour
 
 
         }
-        
+        Debug.Log(this.transform.position);
     }
 }
