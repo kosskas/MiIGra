@@ -103,13 +103,7 @@ public class FoxController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Heart"))
-        {
-            lives++;
-            Debug.Log("Lives: " + lives);
-            other.gameObject.SetActive(false);
-            return;
-        }
+        // Bonus //
         if (other.CompareTag("Bonus"))
         {
             GameManager.instance.AddPoints(scoreIncrement);
@@ -117,8 +111,57 @@ public class FoxController : MonoBehaviour
             return;
         }
 
+        // Enemy //
+        if (other.CompareTag("Enemy"))
+        {
+            if (transform.position.y > other.gameObject.transform.position.y)
+            {
+                //score += scoreIncrement;
+                Debug.Log("Killed an enemy");
+            }
+            else
+            {
+                transform.position = startPosition;
+                lives--;
+                if (lives == 0)
+                {
+                    Debug.Log("gameover");
+                }
+                else
+                {
+                    Debug.Log("Num of lives: " + lives);
+                    transform.position = startPosition;
+                }
+            }
+        }
 
-        //test
+        // FallLevel //
+        if (other.CompareTag("FallLevel"))
+        {
+            Death();
+        }
+
+        // GameOver //
+        if (other.CompareTag("GameOver"))
+        {
+            if (GameManager.instance.keysFound == 3)
+            {
+                gameOverManager.SetGameOver();
+            }
+
+            return;
+        }
+
+        // Heart //
+        if (other.CompareTag("Heart"))
+        {
+            lives++;
+            Debug.Log("Lives: " + lives);
+            other.gameObject.SetActive(false);
+            return;
+        }
+
+        // Key // //test
         if (other.CompareTag("Key"))
         {
             //keysFound++;
@@ -134,42 +177,7 @@ public class FoxController : MonoBehaviour
             return;
         }
 
-        if (other.CompareTag("GameOver"))
-        {
-            if( GameManager.instance.keysFound == 3)
-            {
-                gameOverManager.SetGameOver();
-            }
-            
-            return;
-        }
-
-
-        if (other.CompareTag("Enemy") && transform.position.y > other.gameObject.transform.position.y)
-        {
-            //score += scoreIncrement;
-            Debug.Log("Killed an enemy");
-        }
-        else
-        {
-            transform.position = startPosition;
-            lives--;
-            if (lives == 0)
-            {
-                Debug.Log("gameover");
-            }
-            else
-            {
-                Debug.Log("Num of lives: " + lives);
-                transform.position = startPosition;
-            }
-        }
-
-        if (other.CompareTag("FallLevel"))
-        {
-            Death();
-        }
-
+        // MovingPlatform //
         if (other.CompareTag("MovingPlatform"))
         {
             transform.SetParent(other.transform);
