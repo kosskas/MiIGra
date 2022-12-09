@@ -144,7 +144,8 @@ public class FoxController : MonoBehaviour
             return;
         }
 
-        if(other.CompareTag("Enemy") && transform.position.y > other.gameObject.transform.position.y)
+
+        if (other.CompareTag("Enemy") && transform.position.y > other.gameObject.transform.position.y)
         {
             //score += scoreIncrement;
             Debug.Log("Killed an enemy");
@@ -153,20 +154,33 @@ public class FoxController : MonoBehaviour
         {
             transform.position = startPosition;
             lives--;
-            if(lives == 0)
+            if (lives == 0)
             {
                 Debug.Log("gameover");
             }
             else
             {
-                Debug.Log("Num of lives: "+lives);
+                Debug.Log("Num of lives: " + lives);
                 transform.position = startPosition;
             }
         }
 
-        if(other.CompareTag("FallLevel"))
+        if (other.CompareTag("FallLevel"))
         {
             Death();
+        }
+
+        if (other.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(other.transform);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(null);
         }
     }
 
