@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public Canvas inGameCanvas;
     public Image[] keysTab;
     public int keysFound = 0;
+    public TMP_Text timeText;
+    private float timer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateTime();
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(instance.currentGameState == GameState.GS_GAME)
@@ -37,6 +41,11 @@ public class GameManager : MonoBehaviour
             }
             
         }
+    }
+    private void UpdateTime()
+    {
+        timer += Time.deltaTime;
+        timeText.text = string.Format("Time: {0:00}:{1:00}", ((int)timer / 60), ((int)timer % 60));
     }
 
     void Awake()
