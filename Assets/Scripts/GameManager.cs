@@ -4,30 +4,36 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public enum GameState {GS_PAUSEMENU, GS_GAME, GS_LEVELCOMPLETED, GS_GAME_OVER}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public TMP_Text scoreText;
+    public TMP_Text endScoreText;
+    public TMP_Text highScoreText;
     public TMP_Text heartsText;
     public TMP_Text enemyKills;
     private int score = 0;
-    private int lives = 3;
+    public int lives = 3;
     private int enemiesKilled = 0;
-    public GameState currentGameState = GameState.GS_PAUSEMENU;
+    public GameState currentGameState = GameState.GS_GAME;
     public Canvas inGameCanvas;
     public Image[] keysTab;
     public int keysFound = 0;
     public int keysToFound = 3;
     public TMP_Text timeText;
     private float timer = 0;
-
+    public Canvas pauseMenuCanvas;
+    public Canvas levelCompletedCanvas;
+    public const string keyHighScore = "HighScoreLelev1";
     // Start is called before the first frame update
     //
     void Start()
     {
         heartsText.text = lives.ToString();
+       
     }
 
     // Update is called once per frame
@@ -44,12 +50,14 @@ public class GameManager : MonoBehaviour
             {
                 PauseMenu();
             }
-            else //if (instance.currentGameState == GameState.GS_PAUSEMENU)
+            else if (instance.currentGameState == GameState.GS_PAUSEMENU)
             {
                 InGame();
             }
+
             
         }
+        
     }
     private void UpdateTime()
     {
@@ -59,11 +67,17 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        
         instance = this;
+        InGame();
         score = 0;
         for(int i = 0; i < keysTab.Length; i++)
         {
             keysTab[i].color = Color.grey;
+        }
+        if(!PlayerPrefs.HasKey(keyHighScore))
+        {
+            PlayerPrefs.SetInt(keyHighScore, 0);
         }
     }
     public void AddKeys()
@@ -88,7 +102,24 @@ public class GameManager : MonoBehaviour
 
     void SetGameState(GameState newGameState)
     {
-        if(newGameState == GameState.GS_GAME)
+       if(newGameState == GameState.GS_LEVELCOMPLETED)
+        {
+            Scene currentScene = SceneManager.GetActiveScene();
+            int highScore = 0;
+            if (currentScene.name == "Level1")
+            {
+                highScore = PlayerPrefs.GetInt(keyHighScore);
+                if (highScore<score)
+                {
+                    PlayerPrefs.SetInt(keyHighScore, score);
+                    highScore = score;
+
+                }
+            }
+            endScoreText.text = string.Format("Your score: " + score);
+            highScoreText.text = string.Format("The best score: " + highScore);
+        }
+        else if(newGameState == GameState.GS_GAME)
         {
             inGameCanvas.enabled = true;
         }
@@ -97,6 +128,9 @@ public class GameManager : MonoBehaviour
             inGameCanvas.enabled = false;
         }
         currentGameState = newGameState;
+        pauseMenuCanvas.enabled = (currentGameState == GameState.GS_PAUSEMENU);
+        levelCompletedCanvas.enabled = (currentGameState == GameState.GS_LEVELCOMPLETED);
+        
     }
 
     public void PauseMenu()
@@ -118,4 +152,19 @@ public class GameManager : MonoBehaviour
     {
         SetGameState(GameState.GS_GAME_OVER);
     }
+
+    public void OnResumeButtonClicked()
+    {
+        InGame();
+    }
+
+    public void OnRestartButtonClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnReturnToMainMenuButtonClicked()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }    
 }

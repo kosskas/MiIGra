@@ -146,11 +146,13 @@ public class FoxController : MonoBehaviour
         }
 
         // GameOver //
-        if (other.CompareTag("GameOver"))
+        if (other.CompareTag("Exit"))
         {
             if (GameManager.instance.keysFound == GameManager.instance.keysToFound)
             {
-                gameOverManager.SetGameOver();
+                GameManager.instance.AddPoints(100 * GameManager.instance.lives);
+                //gameOverManager.SetGameOver();
+                GameManager.instance.LevelCompleted();
             }
 
             return;
