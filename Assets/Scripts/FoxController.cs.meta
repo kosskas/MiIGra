@@ -3,7 +3,9 @@ guid: 08f9e78f1267c1c4389b210a52511e43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - gameOverManager: {instanceID: 0}
+  - bSound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

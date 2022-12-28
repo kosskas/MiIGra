@@ -17,7 +17,15 @@ public class FoxController : MonoBehaviour
    // private int lives = 3;
     private Vector2 startPosition;
     //private int keysFound = 0;
-   // private const int keysNumber = 3;
+    // private const int keysNumber = 3;
+    [SerializeField] AudioClip bSound;
+    [SerializeField] AudioClip enemyDeathSound;
+    [SerializeField] AudioClip playerDeathSound;
+    [SerializeField] AudioClip heartSound;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip keySound;
+    [SerializeField] AudioClip winSound;
+    private AudioSource source;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +38,7 @@ public class FoxController : MonoBehaviour
         startPosition = transform.position;
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -83,6 +92,7 @@ public class FoxController : MonoBehaviour
     {
         if(isGrounded())
         {
+            source.PlayOneShot(jumpSound, AudioListener.volume);
             rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             Debug.Log("jumping");
         }
@@ -106,8 +116,10 @@ public class FoxController : MonoBehaviour
         // Bonus //
         if (other.CompareTag("Bonus"))
         {
+            source.PlayOneShot(bSound, AudioListener.volume);
             GameManager.instance.AddPoints(scoreIncrement);
             other.gameObject.SetActive(false);
+           
             return;
         }
 
@@ -116,12 +128,14 @@ public class FoxController : MonoBehaviour
         {
             if (transform.position.y > other.gameObject.transform.position.y)
             {
+                source.PlayOneShot(enemyDeathSound, AudioListener.volume);
                 GameManager.instance.AddKill();
                 //score += scoreIncrement;
                 Debug.Log("Killed an enemy");
             }
             else
             {
+                source.PlayOneShot(playerDeathSound, AudioListener.volume);
                 transform.position = startPosition;
                 GameManager.instance.AddHeart(-1);
                 //lives--;
@@ -150,6 +164,7 @@ public class FoxController : MonoBehaviour
         {
             if (GameManager.instance.keysFound == GameManager.instance.keysToFound)
             {
+                source.PlayOneShot(winSound, AudioListener.volume);
                 GameManager.instance.AddPoints(100 * GameManager.instance.lives);
                 //gameOverManager.SetGameOver();
                 GameManager.instance.LevelCompleted();
@@ -161,6 +176,7 @@ public class FoxController : MonoBehaviour
         // Heart //
         if (other.CompareTag("Heart"))
         {
+            source.PlayOneShot(heartSound, AudioListener.volume);
             GameManager.instance.AddHeart(1);
             //lives++;
             //Debug.Log("Lives: " + lives);
@@ -173,6 +189,7 @@ public class FoxController : MonoBehaviour
         {
             //keysFound++;
             //Debug.Log("Keys: " + keysFound);
+            source.PlayOneShot(keySound, AudioListener.volume);
             GameManager.instance.AddKeys();
             other.gameObject.SetActive(false);
             /*
