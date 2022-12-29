@@ -6,7 +6,7 @@ using System;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public enum GameState {GS_PAUSEMENU, GS_GAME, GS_LEVELCOMPLETED, GS_GAME_OVER}
+public enum GameState {GS_PAUSEMENU, GS_GAME, GS_LEVELCOMPLETED, GS_GAME_OVER, GS_OPTIONS}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text endScoreText;
     public TMP_Text highScoreText;
     public TMP_Text heartsText;
+    public TMP_Text QualityText;
     public TMP_Text enemyKills;
     private int score = 0;
     public int lives = 3;
@@ -27,13 +28,16 @@ public class GameManager : MonoBehaviour
     private float timer = 0;
     public Canvas pauseMenuCanvas;
     public Canvas levelCompletedCanvas;
+    public Canvas optionsCanvas;
     public const string keyHighScore = "HighScoreLelev1";
+    public Slider slider;
+
     // Start is called before the first frame update
     //
     void Start()
     {
         heartsText.text = lives.ToString();
-       
+        QualityText.text = QualitySettings.names[QualitySettings.GetQualityLevel()];
     }
 
     // Update is called once per frame
@@ -122,6 +126,12 @@ public class GameManager : MonoBehaviour
         else if(newGameState == GameState.GS_GAME)
         {
             inGameCanvas.enabled = true;
+            Time.timeScale = 1;
+        }
+        else if (newGameState == GameState.GS_OPTIONS)
+        {
+            Time.timeScale = 0;
+            inGameCanvas.enabled = false;
         }
         else
         {
@@ -130,7 +140,8 @@ public class GameManager : MonoBehaviour
         currentGameState = newGameState;
         pauseMenuCanvas.enabled = (currentGameState == GameState.GS_PAUSEMENU);
         levelCompletedCanvas.enabled = (currentGameState == GameState.GS_LEVELCOMPLETED);
-        
+        optionsCanvas.enabled = (currentGameState == GameState.GS_OPTIONS);
+
     }
 
     public void PauseMenu()
@@ -153,6 +164,11 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.GS_GAME_OVER);
     }
 
+    public void Options()
+    {
+        SetGameState(GameState.GS_OPTIONS);
+    }
+
     public void OnResumeButtonClicked()
     {
         InGame();
@@ -166,5 +182,25 @@ public class GameManager : MonoBehaviour
     public void OnReturnToMainMenuButtonClicked()
     {
         SceneManager.LoadScene("MainMenu");
-    }    
+    }
+    public void OnPlusButtonClicked()
+    {
+        QualitySettings.IncreaseLevel();
+        QualityText.text= QualitySettings.names[QualitySettings.GetQualityLevel()];
+
+    }
+    public void OnMinusButtonClicked()
+    {
+        QualitySettings.DecreaseLevel();
+        QualityText.text = QualitySettings.names[QualitySettings.GetQualityLevel()];
+    }
+    public void OnOptionsButtonClicked()
+    {
+        Options();
+    }
+    public void SetVolume(float vol)
+    {
+        AudioListener.volume = slider.value;
+       // Debug.Log(vol);
+    }
 }

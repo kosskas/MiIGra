@@ -21,10 +21,10 @@ public class WaypointFollower : MonoBehaviour
         if (Vector2.Distance(waypoints[currentWaypoint].transform.position,this.transform.position) < 0.1f)
         {
             currentWaypoint = (currentWaypoint +1)%waypoints.Length;
-            Debug.Log(currentWaypoint);
+           // Debug.Log(currentWaypoint);
 
 
         }
-        Debug.Log(this.transform.position);
+       // Debug.Log(this.transform.position);
     }
 }
