@@ -27,6 +27,8 @@ public class FoxController : MonoBehaviour
     [SerializeField] AudioClip winSound;
     private AudioSource source;
     private bool canDoubleJump = false;
+    public float offset = 0.2f;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +55,9 @@ public class FoxController : MonoBehaviour
             animator.SetBool("IsWalking", isWalking);
 
             // Debug.DrawRay(transform.position, rayLength * Vector3.down, Color.white, 1,false);
+            Debug.DrawRay(transform.position + new Vector3(0, 0, 0), rayLength * Vector3.down, Color.cyan, 0.1f, false);
+            Debug.DrawRay(transform.position + new Vector3(offset , 0, 0), rayLength * Vector3.down, Color.red, 0.1f, false);
+            Debug.DrawRay(transform.position + new Vector3(-offset, 0, 0), rayLength * Vector3.down, Color.red, 0.1f, false);
         }
     }
 
@@ -120,7 +125,10 @@ public class FoxController : MonoBehaviour
     }
     private bool isGrounded()
     {
-        return Physics2D.Raycast(this.transform.position, Vector2.down, rayLength, groundLayer.value);
+        //return Physics2D.Raycast(this.transform.position, Vector2.down, rayLength, groundLayer.value);
+        return Physics2D.Raycast(this.transform.position + new Vector3(0, 0, 0), Vector2.down, rayLength, groundLayer.value) ||
+            Physics2D.Raycast(transform.position + new Vector3(offset, 0, 0), Vector2.down, rayLength, groundLayer.value) ||
+            Physics2D.Raycast(transform.position + new Vector3(-offset, 0, 0), Vector2.down, rayLength, groundLayer.value);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
