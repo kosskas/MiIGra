@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using UnityEngine.SceneManagement;
-//
+
 
 public enum GameState {GS_PAUSEMENU, GS_GAME, GS_LEVELCOMPLETED, GS_GAME_OVER, GS_OPTIONS}
 public class GameManager : MonoBehaviour
