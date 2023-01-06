@@ -8500,7 +8500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1324539587286472804, guid: 1b35fd61a68051e4a8e9a32766aae3a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: -4
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1324539587286472804, guid: 1b35fd61a68051e4a8e9a32766aae3a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8552,7 +8552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1324539587286472857, guid: 1b35fd61a68051e4a8e9a32766aae3a7, type: 3}
       propertyPath: m_Name
-      value: Eagle3
+      value: Bat3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -62392,7 +62392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1324539587286472857, guid: 1b35fd61a68051e4a8e9a32766aae3a7, type: 3}
       propertyPath: m_Name
-      value: Eagle2
+      value: Bat2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -62964,7 +62964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1324539587286472857, guid: 1b35fd61a68051e4a8e9a32766aae3a7, type: 3}
       propertyPath: m_Name
-      value: Eagle
+      value: Bat
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
