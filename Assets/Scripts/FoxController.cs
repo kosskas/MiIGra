@@ -26,6 +26,7 @@ public class FoxController : MonoBehaviour
     [SerializeField] AudioClip keySound;
     [SerializeField] AudioClip winSound;
     private AudioSource source;
+    private bool canDoubleJump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +85,7 @@ public class FoxController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
+
         }
         
     }
@@ -95,6 +97,16 @@ public class FoxController : MonoBehaviour
             source.PlayOneShot(jumpSound, AudioListener.volume);
             rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             Debug.Log("jumping");
+            canDoubleJump = true;
+        }
+        else
+        {
+            if (canDoubleJump)
+            {
+                canDoubleJump = false;
+                source.PlayOneShot(jumpSound, AudioListener.volume);
+                rigidBody.AddForce(Vector2.up * jumpForce * 0.75f, ForceMode2D.Impulse);
+            }
         }
     }
 
