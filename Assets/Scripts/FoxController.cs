@@ -54,10 +54,15 @@ public class FoxController : MonoBehaviour
             animator.SetBool("IsGrounded", isGrounded());
             animator.SetBool("IsWalking", isWalking);
 
+            if(GameManager.instance.currentAir==0)
+            {
+                Death();
+            }
+
             // Debug.DrawRay(transform.position, rayLength * Vector3.down, Color.white, 1,false);
-            Debug.DrawRay(transform.position + new Vector3(0, 0, 0), rayLength * Vector3.down, Color.cyan, 0.1f, false);
-            Debug.DrawRay(transform.position + new Vector3(offset , 0, 0), rayLength * Vector3.down, Color.red, 0.1f, false);
-            Debug.DrawRay(transform.position + new Vector3(-offset, 0, 0), rayLength * Vector3.down, Color.red, 0.1f, false);
+            //Debug.DrawRay(transform.position + new Vector3(0, 0, 0), rayLength * Vector3.down, Color.cyan, 0.1f, false);
+            //Debug.DrawRay(transform.position + new Vector3(offset , 0, 0), rayLength * Vector3.down, Color.red, 0.1f, false);
+            //Debug.DrawRay(transform.position + new Vector3(-offset, 0, 0), rayLength * Vector3.down, Color.red, 0.1f, false);
         }
     }
 
@@ -143,6 +148,15 @@ public class FoxController : MonoBehaviour
             return;
         }
 
+        if (other.CompareTag("Bubble"))
+        {
+            source.PlayOneShot(bSound, AudioListener.volume);
+            GameManager.instance.AddAir();
+            other.gameObject.SetActive(false);
+
+            return;
+        }
+
         // Enemy //
         if (other.CompareTag("Enemy"))
         {
@@ -155,9 +169,10 @@ public class FoxController : MonoBehaviour
             }
             else
             {
-                source.PlayOneShot(playerDeathSound, AudioListener.volume);
-                transform.position = startPosition;
-                GameManager.instance.AddHeart(-1);
+                Death();
+                //source.PlayOneShot(playerDeathSound, AudioListener.volume);
+                //transform.position = startPosition;
+                //GameManager.instance.AddHeart(-1);
                 //lives--;
                 /*
                 if (lives == 0)
@@ -238,9 +253,11 @@ public class FoxController : MonoBehaviour
 
     private void Death()
     {
+        source.PlayOneShot(playerDeathSound, AudioListener.volume);
         transform.position = startPosition;
         //lives--;
         GameManager.instance.AddHeart(-1);
+        GameManager.instance.currentAir = 100;
         Debug.Log("gameover");
         
     }

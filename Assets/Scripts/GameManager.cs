@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text heartsText;
     public TMP_Text QualityText;
     public TMP_Text enemyKills;
+    public TMP_Text airText;
+    public int currentAir = 100;
     private int score = 0;
     public int lives = 3;
     private int enemiesKilled = 0;
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         heartsText.text = lives.ToString();
         QualityText.text = QualitySettings.names[QualitySettings.GetQualityLevel()];
+        InvokeRepeating("UpdateAir", 0.5f, 0.5f);
     }
 
     // Update is called once per frame
@@ -70,6 +73,16 @@ public class GameManager : MonoBehaviour
         timeText.text = string.Format("Time: {0:00}:{1:00}", ((int)timer / 60), ((int)timer % 60));
     }
 
+    private void UpdateAir()
+    {
+        if(currentAir>100)
+        {
+            currentAir = 100;
+        }
+        currentAir -= 1;
+        airText.text = currentAir.ToString();
+    }
+
     void Awake()
     {
         
@@ -84,6 +97,11 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(keyHighScore, 0);
         }
+    }
+
+    public void AddAir()
+    {
+        currentAir += 30;
     }
     public void AddKeys()
     {
@@ -129,10 +147,14 @@ public class GameManager : MonoBehaviour
             inGameCanvas.enabled = true;
             Time.timeScale = 1;
         }
-        else if (newGameState == GameState.GS_OPTIONS)
+        else if (newGameState == GameState.GS_OPTIONS || newGameState == GameState.GS_PAUSEMENU)
         {
             Time.timeScale = 0;
             inGameCanvas.enabled = false;
+        }
+        else if (newGameState == GameState.GS_GAME_OVER)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
