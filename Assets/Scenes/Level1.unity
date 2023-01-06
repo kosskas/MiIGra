@@ -7005,7 +7005,7 @@ GameObject:
   - component: {fileID: 512952215}
   - component: {fileID: 512952214}
   m_Layer: 0
-  m_Name: back (1)
+  m_Name: Ksiezyc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7676,7 +7676,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f00b4747e194d43ebba76abc9ea17f57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7696,8 +7696,8 @@ Transform:
   m_GameObject: {fileID: 566599251}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -28.24, y: -15.39, z: 0.053480703}
-  m_LocalScale: {x: 4, y: 4, z: 4}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -7765,6 +7765,7 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 7e9ee6dc04a5d40d1a5dfc4beb9865e7, type: 3}
   keySound: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   winSound: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
+  offset: 0.2
 --- !u!95 &566599257
 Animator:
   serializedVersion: 4
@@ -7795,7 +7796,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b1ec28e46a76b0b448bc303eb0e03b59, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dcaa49c56a6674229829c944cf6ff2f8, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.029
   m_Pitch: 1
@@ -8003,7 +8004,7 @@ GameObject:
   - component: {fileID: 577092612}
   - component: {fileID: 577092614}
   m_Layer: 0
-  m_Name: back
+  m_Name: Drzewa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9840,7 +9841,7 @@ GameObject:
   - component: {fileID: 1106507639}
   - component: {fileID: 1106507640}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9971,7 +9972,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Super fox adventure
+  m_text: Escape from the forest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10005,8 +10006,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -50913,7 +50914,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 056b6a3f6e14d4af2a7d641c4dd44e79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b6bd832411f65410381d33458375068a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
